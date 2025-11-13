@@ -46,6 +46,81 @@
             transition: background 0.3s ease, color 0.3s ease;
         }
 
+        /* Loading Screen */
+        .loading-screen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: var(--bg-primary);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+            transition: opacity 0.5s, visibility 0.5s;
+        }
+
+        .loading-screen.hidden {
+            opacity: 0;
+            visibility: hidden;
+        }
+
+        .loader {
+            width: 60px;
+            height: 60px;
+            border: 5px solid var(--border);
+            border-top: 5px solid var(--primary);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        .loading-text {
+            margin-top: 1.5rem;
+            font-size: 1.2rem;
+            color: var(--text-secondary);
+            font-weight: 600;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        /* Back to Top Button */
+        .back-to-top {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            width: 50px;
+            height: 50px;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            border: none;
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            box-shadow: 0 4px 20px rgba(99, 102, 241, 0.4);
+            z-index: 1000;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s;
+        }
+
+        .back-to-top.visible {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .back-to-top:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 30px rgba(99, 102, 241, 0.6);
+        }
+
         .bg-animation {
             position: fixed;
             width: 100%;
@@ -369,6 +444,21 @@
             margin-bottom: 1.5rem;
             animation: fadeInUp 1s 0.2s both;
             font-weight: 600;
+            min-height: 2.5rem;
+        }
+
+        .typing-cursor {
+            display: inline-block;
+            width: 3px;
+            height: 1.8rem;
+            background: var(--primary);
+            margin-left: 5px;
+            animation: blink 0.7s infinite;
+        }
+
+        @keyframes blink {
+            0%, 50% { opacity: 1; }
+            51%, 100% { opacity: 0; }
         }
 
         .hero-content .description {
@@ -474,21 +564,6 @@
             border-color: transparent;
             transform: translateY(-5px) scale(1.05);
             box-shadow: 0 10px 30px rgba(99, 102, 241, 0.4);
-        }
-
-        .hero-social a span {
-            position: absolute;
-            bottom: -30px;
-            font-size: 0.75rem;
-            font-weight: 600;
-            white-space: nowrap;
-            opacity: 0;
-            transition: all 0.3s;
-        }
-
-        .hero-social a:hover span {
-            bottom: -35px;
-            opacity: 1;
         }
 
         section {
@@ -611,25 +686,33 @@
             font-size: 1.8rem;
         }
 
-        .skill-category ul {
-            list-style: none;
+        .skill-item {
+            margin-bottom: 1.5rem;
         }
 
-        .skill-category li {
-            padding: 0.7rem 0;
-            color: var(--text-secondary);
+        .skill-name {
             display: flex;
-            align-items: center;
-            gap: 0.7rem;
-            font-size: 1rem;
-            font-weight: 500;
+            justify-content: space-between;
+            margin-bottom: 0.5rem;
+            color: var(--text-secondary);
+            font-weight: 600;
         }
 
-        .skill-category li::before {
-            content: '▹';
-            color: var(--primary);
-            font-weight: bold;
-            font-size: 1.2rem;
+        .skill-bar {
+            width: 100%;
+            height: 8px;
+            background: rgba(99, 102, 241, 0.1);
+            border-radius: 10px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .skill-progress {
+            height: 100%;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            border-radius: 10px;
+            width: 0;
+            transition: width 1.5s ease;
         }
 
         .projects-grid {
@@ -752,6 +835,78 @@
             line-height: 1.8;
         }
 
+        .contact-form {
+            background: var(--bg-card);
+            padding: 3rem;
+            border-radius: 20px;
+            border: 2px solid var(--border);
+            box-shadow: 0 4px 15px var(--shadow);
+            margin-bottom: 3rem;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+            text-align: left;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            color: var(--text-primary);
+            font-weight: 600;
+            font-size: 1rem;
+        }
+
+        .form-group input,
+        .form-group textarea {
+            width: 100%;
+            padding: 1rem;
+            border: 2px solid var(--border);
+            border-radius: 10px;
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            font-size: 1rem;
+            font-family: inherit;
+            transition: all 0.3s;
+        }
+
+        .form-group input:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.1);
+        }
+
+        .form-group textarea {
+            min-height: 150px;
+            resize: vertical;
+        }
+
+        .submit-btn {
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+            color: white;
+            padding: 1rem 3rem;
+            border: none;
+            border-radius: 50px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            box-shadow: 0 4px 20px rgba(99, 102, 241, 0.4);
+            display: inline-flex;
+            align-items: center;
+            gap: 0.7rem;
+        }
+
+        .submit-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 30px rgba(99, 102, 241, 0.6);
+        }
+
+        .submit-btn i {
+            font-size: 1.2rem;
+        }
+
         .contact-info {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
@@ -783,9 +938,6 @@
             font-size: 3rem;
             color: var(--primary);
             margin-bottom: 1rem;
-            display: block;
-            margin-left: auto;
-            margin-right: auto;
         }
 
         .contact-item h4 {
@@ -800,8 +952,6 @@
             text-decoration: none;
             transition: color 0.3s;
             font-weight: 500;
-            display: inline-block;
-            margin-top: 0.25rem;
         }
 
         .contact-item a:hover {
@@ -961,6 +1111,10 @@
                 padding: 0 1rem;
             }
 
+            .typing-cursor {
+                height: 1.1rem;
+            }
+
             .hero-content .description {
                 font-size: 0.95rem;
                 padding: 0 1rem;
@@ -1044,15 +1198,38 @@
                 justify-content: center;
             }
 
+            .contact-form {
+                padding: 2rem 1.5rem;
+            }
+
             footer {
                 padding: 2rem 1rem;
                 font-size: 0.9rem;
+            }
+
+            .back-to-top {
+                bottom: 20px;
+                right: 20px;
+                width: 45px;
+                height: 45px;
+                font-size: 1.3rem;
             }
         }
     </style>
 </head>
 <body data-theme="dark">
+    <!-- Loading Screen -->
+    <div class="loading-screen" id="loadingScreen">
+        <div class="loader"></div>
+        <div class="loading-text">Loading...</div>
+    </div>
+
     <div class="bg-animation"></div>
+
+    <!-- Back to Top Button -->
+    <button class="back-to-top" id="backToTop" aria-label="Back to top">
+        <i class="fas fa-arrow-up"></i>
+    </button>
 
     <nav id="navbar">
         <div class="nav-container">
@@ -1099,7 +1276,7 @@
         <div class="hero-content">
             <img src="https://i.postimg.cc/7Z76XDwG/30304300102615-3.jpg" alt="Youssef Ahmed" class="profile-image">
             <h1>Youssef Ahmed El Mordy</h1>
-            <p class="subtitle">Backend Developer | Laravel & PHP Specialist</p>
+            <p class="subtitle" id="typingText"></p>
             <p class="description">
                 Building scalable backend solutions with modern technologies. 
                 Specialized in Laravel, FastAPI, and AI integration with 500+ users served 
@@ -1116,27 +1293,21 @@
             <div class="hero-social">
                 <a href="https://github.com/Youssef-Ahmed-k" target="_blank" title="GitHub">
                     <i class="fab fa-github"></i>
-                    <span>GitHub</span>
                 </a>
                 <a href="https://www.linkedin.com/in/youssef-ahmed-el-mordy-541471342/" target="_blank" title="LinkedIn">
                     <i class="fab fa-linkedin-in"></i>
-                    <span>LinkedIn</span>
                 </a>
                 <a href="https://wtsi.me/201141197334" target="_blank" title="WhatsApp">
                     <i class="fab fa-whatsapp"></i>
-                    <span>WhatsApp</span>
                 </a>
                 <a href="https://www.instagram.com/youssef._.ahmed._.k?igsh=OHZmcHAydXdtY3Bs&utm_source=qr" target="_blank" title="Instagram">
                     <i class="fab fa-instagram"></i>
-                    <span>Instagram</span>
                 </a>
                 <a href="https://www.facebook.com/share/1Ax6SqNdsS/?mibextid=wwXIfr" target="_blank" title="Facebook">
                     <i class="fab fa-facebook-f"></i>
-                    <span>Facebook</span>
                 </a>
                 <a href="https://drive.google.com/file/d/1quXjxBdMANqjwj_ljB_6TW1WdJOZZ9qK/view?usp=drive_link" target="_blank" title="Download CV">
                     <i class="fas fa-file-pdf"></i>
-                    <span>CV/Resume</span>
                 </a>
             </div>
         </div>
@@ -1164,19 +1335,19 @@
             </div>
             <div class="stats">
                 <div class="stat-card">
-                    <h4>15+</h4>
+                    <h4 data-target="15">0</h4>
                     <p>API Endpoints Built</p>
                 </div>
                 <div class="stat-card">
-                    <h4>1000+</h4>
+                    <h4 data-target="1000">0</h4>
                     <p>Daily Requests Handled</p>
                 </div>
                 <div class="stat-card">
-                    <h4>40%</h4>
+                    <h4 data-target="40">0</h4>
                     <p>Query Optimization</p>
                 </div>
                 <div class="stat-card">
-                    <h4>95%</h4>
+                    <h4 data-target="95">0</h4>
                     <p>AI Accuracy Achieved</p>
                 </div>
             </div>
@@ -1207,15 +1378,15 @@
             </div>
             <div class="stats">
                 <div class="stat-card">
-                    <h4>4</h4>
+                    <h4 data-target="4">0</h4>
                     <p>Years of Study</p>
                 </div>
                 <div class="stat-card">
-                    <h4>3.38</h4>
+                    <h4 data-target="3.38">0</h4>
                     <p>GPA Score</p>
                 </div>
                 <div class="stat-card">
-                    <h4>2025</h4>
+                    <h4 data-target="2025">0</h4>
                     <p>Graduation Year</p>
                 </div>
                 <div class="stat-card">
@@ -1231,62 +1402,198 @@
         <div class="skills-grid">
             <div class="skill-category">
                 <h3><i class="fas fa-server"></i> Backend</h3>
-                <ul>
-                    <li>Laravel & PHP</li>
-                    <li>FastAPI & Python</li>
-                    <li>RESTful APIs</li>
-                    <li>WebSockets</li>
-                    <li>JWT & OAuth</li>
-                    <li>Microservices</li>
-                </ul>
+                <div class="skill-item">
+                    <div class="skill-name">
+                        <span>Laravel & PHP</span>
+                        <span>90%</span>
+                    </div>
+                    <div class="skill-bar">
+                        <div class="skill-progress" data-progress="90"></div>
+                    </div>
+                </div>
+                <div class="skill-item">
+                    <div class="skill-name">
+                        <span>FastAPI & Python</span>
+                        <span>85%</span>
+                    </div>
+                    <div class="skill-bar">
+                        <div class="skill-progress" data-progress="85"></div>
+                    </div>
+                </div>
+                <div class="skill-item">
+                    <div class="skill-name">
+                        <span>RESTful APIs</span>
+                        <span>95%</span>
+                    </div>
+                    <div class="skill-bar">
+                        <div class="skill-progress" data-progress="95"></div>
+                    </div>
+                </div>
+                <div class="skill-item">
+                    <div class="skill-name">
+                        <span>WebSockets</span>
+                        <span>80%</span>
+                    </div>
+                    <div class="skill-bar">
+                        <div class="skill-progress" data-progress="80"></div>
+                    </div>
+                </div>
             </div>
             <div class="skill-category">
                 <h3><i class="fas fa-database"></i> Databases</h3>
-                <ul>
-                    <li>MySQL</li>
-                    <li>PostgreSQL</li>
-                    <li>MS SQL Server</li>
-                    <li>Database Design</li>
-                    <li>Query Optimization</li>
-                </ul>
+                <div class="skill-item">
+                    <div class="skill-name">
+                        <span>MySQL</span>
+                        <span>90%</span>
+                    </div>
+                    <div class="skill-bar">
+                        <div class="skill-progress" data-progress="90"></div>
+                    </div>
+                </div>
+                <div class="skill-item">
+                    <div class="skill-name">
+                        <span>PostgreSQL</span>
+                        <span>85%</span>
+                    </div>
+                    <div class="skill-bar">
+                        <div class="skill-progress" data-progress="85"></div>
+                    </div>
+                </div>
+                <div class="skill-item">
+                    <div class="skill-name">
+                        <span>MS SQL Server</span>
+                        <span>80%</span>
+                    </div>
+                    <div class="skill-bar">
+                        <div class="skill-progress" data-progress="80"></div>
+                    </div>
+                </div>
+                <div class="skill-item">
+                    <div class="skill-name">
+                        <span>Query Optimization</span>
+                        <span>85%</span>
+                    </div>
+                    <div class="skill-bar">
+                        <div class="skill-progress" data-progress="85"></div>
+                    </div>
+                </div>
             </div>
             <div class="skill-category">
                 <h3><i class="fas fa-rocket"></i> DevOps</h3>
-                <ul>
-                    <li>Docker & Docker Compose</li>
-                    <li>Linux (Ubuntu)</li>
-                    <li>Nginx & Apache</li>
-                    <li>CI/CD (GitHub Actions)</li>
-                </ul>
+                <div class="skill-item">
+                    <div class="skill-name">
+                        <span>Docker</span>
+                        <span>85%</span>
+                    </div>
+                    <div class="skill-bar">
+                        <div class="skill-progress" data-progress="85"></div>
+                    </div>
+                </div>
+                <div class="skill-item">
+                    <div class="skill-name">
+                        <span>Linux (Ubuntu)</span>
+                        <span>80%</span>
+                    </div>
+                    <div class="skill-bar">
+                        <div class="skill-progress" data-progress="80"></div>
+                    </div>
+                </div>
+                <div class="skill-item">
+                    <div class="skill-name">
+                        <span>Nginx & Apache</span>
+                        <span>75%</span>
+                    </div>
+                    <div class="skill-bar">
+                        <div class="skill-progress" data-progress="75"></div>
+                    </div>
+                </div>
+                <div class="skill-item">
+                    <div class="skill-name">
+                        <span>CI/CD</span>
+                        <span>70%</span>
+                    </div>
+                    <div class="skill-bar">
+                        <div class="skill-progress" data-progress="70"></div>
+                    </div>
+                </div>
             </div>
             <div class="skill-category">
-                <h3><i class="fas fa-tools"></i> Tools</h3>
-                <ul>
-                    <li>Git & GitHub</li>
-                    <li>Postman & Insomnia</li>
-                    <li>Swagger</li>
-                    <li>PHPUnit</li>
-                </ul>
-            </div>
-            <div class="skill-category">
-                <h3><i class="fas fa-bullseye"></i> Concepts</h3>
-                <ul>
-                    <li>OOP & SOLID</li>
-                    <li>MVC & Clean Architecture</li>
-                    <li>System Design</li>
-                    <li>API Security</li>
-                    <li>Agile (Scrum)</li>
-                </ul>
+                <h3><i class="fas fa-tools"></i> Tools & Concepts</h3>
+                <div class="skill-item">
+                    <div class="skill-name">
+                        <span>Git & GitHub</span>
+                        <span>90%</span>
+                    </div>
+                    <div class="skill-bar">
+                        <div class="skill-progress" data-progress="90"></div>
+                    </div>
+                </div>
+                <div class="skill-item">
+                    <div class="skill-name">
+                        <span>OOP & SOLID</span>
+                        <span>85%</span>
+                    </div>
+                    <div class="skill-bar">
+                        <div class="skill-progress" data-progress="85"></div>
+                    </div>
+                </div>
+                <div class="skill-item">
+                    <div class="skill-name">
+                        <span>API Security</span>
+                        <span>80%</span>
+                    </div>
+                    <div class="skill-bar">
+                        <div class="skill-progress" data-progress="80"></div>
+                    </div>
+                </div>
+                <div class="skill-item">
+                    <div class="skill-name">
+                        <span>System Design</span>
+                        <span>75%</span>
+                    </div>
+                    <div class="skill-bar">
+                        <div class="skill-progress" data-progress="75"></div>
+                    </div>
+                </div>
             </div>
             <div class="skill-category">
                 <h3><i class="fas fa-brain"></i> AI & ML</h3>
-                <ul>
-                    <li>Computer Vision</li>
-                    <li>Face Detection</li>
-                    <li>Gaze Tracking</li>
-                    <li>Mediapipe</li>
-                    <li>NumPy & Keras</li>
-                </ul>
+                <div class="skill-item">
+                    <div class="skill-name">
+                        <span>Computer Vision</span>
+                        <span>85%</span>
+                    </div>
+                    <div class="skill-bar">
+                        <div class="skill-progress" data-progress="85"></div>
+                    </div>
+                </div>
+                <div class="skill-item">
+                    <div class="skill-name">
+                        <span>Face Detection</span>
+                        <span>90%</span>
+                    </div>
+                    <div class="skill-bar">
+                        <div class="skill-progress" data-progress="90"></div>
+                    </div>
+                </div>
+                <div class="skill-item">
+                    <div class="skill-name">
+                        <span>Mediapipe</span>
+                        <span>80%</span>
+                    </div>
+                    <div class="skill-bar">
+                        <div class="skill-progress" data-progress="80"></div>
+                    </div>
+                </div>
+                <div class="skill-item">
+                    <div class="skill-name">
+                        <span>NumPy & Keras</span>
+                        <span>75%</span>
+                    </div>
+                    <div class="skill-bar">
+                        <div class="skill-progress" data-progress="75"></div>
+                    </div>
+                </div>
             </div>
         </div>
     </section>
@@ -1369,6 +1676,30 @@
                 I'm currently open to new opportunities and interesting projects. 
                 Feel free to reach out if you'd like to collaborate or just have a chat!
             </p>
+            
+            <!-- Contact Form -->
+            <form class="contact-form" id="contactForm">
+                <div class="form-group">
+                    <label for="name">Name</label>
+                    <input type="text" id="name" name="name" required placeholder="Your Name">
+                </div>
+                <div class="form-group">
+                    <label for="email">Email</label>
+                    <input type="email" id="email" name="email" required placeholder="your.email@example.com">
+                </div>
+                <div class="form-group">
+                    <label for="subject">Subject</label>
+                    <input type="text" id="subject" name="subject" required placeholder="Subject">
+                </div>
+                <div class="form-group">
+                    <label for="message">Message</label>
+                    <textarea id="message" name="message" required placeholder="Your message here..."></textarea>
+                </div>
+                <button type="submit" class="submit-btn">
+                    <i class="fas fa-paper-plane"></i> Send Message
+                </button>
+            </form>
+
             <div class="contact-info">
                 <div class="contact-item">
                     <i class="fas fa-envelope"></i>
@@ -1440,6 +1771,14 @@
     </footer>
 
     <script>
+        // Loading Screen
+        window.addEventListener('load', () => {
+            setTimeout(() => {
+                document.getElementById('loadingScreen').classList.add('hidden');
+            }, 1000);
+        });
+
+        // Theme Toggle
         const themeToggle = document.getElementById('themeToggle');
         const body = document.body;
         const icon = themeToggle.querySelector('i');
@@ -1463,6 +1802,93 @@
             } else {
                 icon.className = 'fas fa-sun';
             }
+        }
+
+        // Typing Effect
+        const typingText = document.getElementById('typingText');
+        const text = 'Backend Developer | Laravel & PHP Specialist';
+        let index = 0;
+
+        function typeWriter() {
+            if (index < text.length) {
+                typingText.innerHTML = text.substring(0, index + 1) + '<span class="typing-cursor"></span>';
+                index++;
+                setTimeout(typeWriter, 100);
+            } else {
+                typingText.innerHTML = text;
+            }
+        }
+
+        setTimeout(typeWriter, 500);
+
+        // Counter Animation for Stats
+        function animateCounter(element) {
+            const target = parseFloat(element.getAttribute('data-target'));
+            const duration = 2000;
+            const step = target / (duration / 16);
+            let current = 0;
+            const isDecimal = target % 1 !== 0;
+
+            const counter = setInterval(() => {
+                current += step;
+                if (current >= target) {
+                    element.textContent = isDecimal ? target.toFixed(2) : Math.ceil(target) + '+';
+                    clearInterval(counter);
+                } else {
+                    element.textContent = isDecimal ? current.toFixed(2) : Math.ceil(current) + '+';
+                }
+            }, 16);
+        }
+
+        // Skill Progress Bars Animation
+        function animateSkillBars() {
+            const skillBars = document.querySelectorAll('.skill-progress');
+            skillBars.forEach(bar => {
+                const progress = bar.getAttribute('data-progress');
+                bar.style.width = progress + '%';
+            });
+        }
+
+        // Intersection Observer for Animations
+        const observerOptions = {
+            threshold: 0.3,
+            rootMargin: '0px'
+        };
+
+        const statsObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    const counters = entry.target.querySelectorAll('[data-target]');
+                    counters.forEach(counter => {
+                        if (counter.textContent === '0' || counter.textContent === 'CS') {
+                            if (counter.textContent !== 'CS') {
+                                animateCounter(counter);
+                            }
+                        }
+                    });
+                    statsObserver.unobserve(entry.target);
+                }
+            });
+        }, observerOptions);
+
+        const skillsObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    animateSkillBars();
+                    skillsObserver.unobserve(entry.target);
+                }
+            });
+        }, observerOptions);
+
+        // Observe stats sections
+        document.querySelectorAll('.stats').forEach(stats => {
+            statsObserver.observe(stats);
+        });
+
+        // Observe skills section
+        const skillsSection = document.getElementById('skills');
+        if (skillsSection) {
+            skillsObserver.observe(skillsSection);
         }
 
         // Mobile Menu
@@ -1494,6 +1920,7 @@
             });
         });
 
+        // Smooth Scroll
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {
             anchor.addEventListener('click', function (e) {
                 e.preventDefault();
@@ -1504,6 +1931,7 @@
             });
         });
 
+        // Navbar Scroll Effect
         window.addEventListener('scroll', () => {
             const navbar = document.getElementById('navbar');
             if (window.scrollY > 50) {
@@ -1513,21 +1941,60 @@
             }
         });
 
-        const observerOptions = {
-            threshold: 0.1,
-            rootMargin: '0px 0px -100px 0px'
-        };
+        // Back to Top Button
+        const backToTop = document.getElementById('backToTop');
 
-        const observer = new IntersectionObserver((entries) => {
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 300) {
+                backToTop.classList.add('visible');
+            } else {
+                backToTop.classList.remove('visible');
+            }
+        });
+
+        backToTop.addEventListener('click', () => {
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        });
+
+        // Contact Form
+        const contactForm = document.getElementById('contactForm');
+        
+        contactForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            
+            const formData = new FormData(contactForm);
+            const name = formData.get('name');
+            const email = formData.get('email');
+            const subject = formData.get('subject');
+            const message = formData.get('message');
+            
+            // Create mailto link
+            const mailtoLink = `mailto:Youssefahmed8878@icloud.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(`Name: ${name}\nEmail: ${email}\n\nMessage:\n${message}`)}`;
+            
+            // Open email client
+            window.location.href = mailtoLink;
+            
+            // Show success message
+            alert('Opening your email client...');
+            
+            // Reset form
+            contactForm.reset();
+        });
+
+        // Fade in animations for cards
+        const fadeObserver = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
                 if (entry.isIntersecting) {
                     entry.target.style.animation = 'fadeInUp 1s forwards';
                 }
             });
-        }, observerOptions);
+        }, { threshold: 0.1, rootMargin: '0px 0px -100px 0px' });
 
-        document.querySelectorAll('.skill-category, .project-card, .stat-card, .contact-item').forEach(el => {
-            observer.observe(el);
+        document.querySelectorAll('.skill-category, .project-card, .stat-card, .contact-item, .social-link-card').forEach(el => {
+            fadeObserver.observe(el);
         });
     </script>
 </body>
